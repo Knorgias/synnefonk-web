@@ -1,0 +1,25 @@
+{
+  "name": "synnefonk-web",
+  "description": "A web app build entirely with Lit Web Components",
+  "license": "MIT",
+  "author": "K. Norgias",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "web-dev-server"
+  },
+  "dependencies": {
+    "lit": "^2.7.3"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.2.1"
+  },
+  "exports": {
+    "./*": "./packages/exports/*"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "trailingComma": "all"
+  }
+}
