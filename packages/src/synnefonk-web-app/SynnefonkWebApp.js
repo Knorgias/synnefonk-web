@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import 'synnefonk-web/sidebar.js';
 import 'synnefonk-web/topbar.js';
+import 'synnefonk-web/bookmark.js';
+import { manifestData } from '../../_assets/pokemon/manifest.js';
 
 class SynnefonkWebApp extends LitElement {
   static get properties() {
@@ -13,7 +15,7 @@ class SynnefonkWebApp extends LitElement {
   constructor() {
     super();
     this.title = 'Welcome to the Synnefonk App';
-    this.imgUrl = '';
+    this.assetUrl = '';
   }
 
   static get styles() {
@@ -50,16 +52,8 @@ class SynnefonkWebApp extends LitElement {
         height: 80vh;
       }
 
-      .bookmark {
-        padding: 12px;
-      }
-
-      .bookmark-content {
-        display: flex;
-        border-bottom: 1px solid grey;
-      }
-
       .content {
+        width: 100%;
         overflow-y: auto;
         background-color: aliceblue;
       }
@@ -85,74 +79,30 @@ class SynnefonkWebApp extends LitElement {
     </header>`;
   }
 
+  _renderBookmarks() {
+    const bookmarks = manifestData.map(
+      item => html`
+        <synnefonk-bookmark>
+          <h3 slot="title">${item.data.title}</h3>
+          <img slot="img" src="${item.data.imagePath}" />
+          <p slot="description">${item.data.description}</p>
+        </synnefonk-bookmark>
+      `,
+    );
+    return html`${bookmarks}`;
+  }
+
   _renderMain() {
     return html` <main class="center">
       <div class="sidebar">
         <synnefonk-web-sidebar></synnefonk-web-sidebar>
       </div>
+
       <div class="content">
         <h1>${this.title}</h1>
         <h2>Here's a mini pokedex</h2>
-        <div class="bookmark">
-          <h3 class="bookmark-title">Bulbasaur</h3>
-          <div class="bookmark-content">
-            <img src="${this.imgUrl}/001.png" />
-            <p>
-              There is a plant seed on its back right from the day this Pokémon
-              is born. The seed slowly grows larger.
-            </p>
-          </div>
-        </div>
-        <div class="bookmark">
-          <h3 class="bookmark-title">Ivysaur</h3>
-          <div class="bookmark-content">
-            <img src="${this.imgUrl}/002.png" />
-            <p>
-              When the bulb on its back grows large, it appears to lose the
-              ability to stand on its hind legs.
-            </p>
-          </div>
-        </div>
-        <div class="bookmark">
-          <h3 class="bookmark-title">Venusaur</h3>
-          <div class="bookmark-content">
-            <img src="${this.imgUrl}/003.png" />
-            <p>
-              Its plant blooms when it is absorbing solar energy. It stays on
-              the move to seek sunlight.
-            </p>
-          </div>
-        </div>
-        <div class="bookmark">
-          <h3 class="bookmark-title">Charmander</h3>
-          <div class="bookmark-content">
-            <img src="${this.imgUrl}/004.png" />
-            <p>
-              It has a preference for hot things. When it rains, steam is said
-              to spout from the tip of its tail.
-            </p>
-          </div>
-        </div>
-        <div class="bookmark">
-          <h3 class="bookmark-title">Charmeleon</h3>
-          <div class="bookmark-content">
-            <img src="${this.imgUrl}/005.png" />
-            <p>
-              It has a barbaric nature. In battle, it whips its fiery tail
-              around and slashes away with sharp claws.
-            </p>
-          </div>
-        </div>
-        <div class="bookmark">
-          <h3 class="bookmark-title">Charizard</h3>
-          <div class="bookmark-content">
-            <img src="${this.imgUrl}/006.png" />
-            <p>
-              It spits fire that is hot enough to melt boulders. It may cause
-              forest fires by blowing flames.
-            </p>
-          </div>
-        </div>
+
+        ${this._renderBookmarks()}
       </div>
     </main>`;
   }
@@ -171,9 +121,10 @@ class SynnefonkWebApp extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     // Construct the path "/packages/images" to the images
-    this.imgUrl = `${document.querySelector('base').href}packages/images`;
-    console.log('imgUrl:', this.imgUrl);
+    this.assetUrl = `${document.querySelector('base').href}packages/_assets`;
+    console.log('assetUrl:', this.assetUrl);
   }
 }
 
