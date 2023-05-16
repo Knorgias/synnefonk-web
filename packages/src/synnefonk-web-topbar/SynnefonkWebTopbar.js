@@ -43,6 +43,11 @@ export class SynnefonkWebTopbar extends LitElement {
       </div>
       <div class="link-2"><a></a>Another Page</div>
       <div class="link-3"><a></a>Github Repo</div>
+      <a href="https://www.pokemon.com/us/pokedex">
+        <img
+          src="packages/_assets/images/pokeball.svg"
+          style="width: 100%; height: 100%;"
+      /></a>
     </div>`;
   }
 }
